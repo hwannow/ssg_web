@@ -29,9 +29,6 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({ storage });
-var upload = multer({ storage });
-
-var upload = multer({ storage });
 
 app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({ extended: false }));
