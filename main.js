@@ -40,6 +40,12 @@ app.use(session({
 }))
 app.use(cors());
 
+
+app.get('/practice', function (req, res, next) {
+  res.jsonp({ name: 'Hwannow', age:20 });
+  next();
+})
+
 app.get('/', (req, res) => {
   var html = template.HTML('Welcome',
     `<hr>
