@@ -40,6 +40,18 @@ router.get('/', function (request, response) {
     });
 }); 
 
+function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 router.get('/:id', function (request, response) {
     if (!authCheck.isOwner(request, response)) {  // 로그인 안되어있으면 로그인 페이지로 이동시킴
         response.send(`<script type="text/javascript">alert("로그인부터 하셔야죠!!"); 
@@ -58,7 +70,7 @@ router.get('/:id', function (request, response) {
             var html = `
             <h2>글쓴이: ${results[0].author}</h2>
             <h1>${results[0].subject}</h1>
-            <h3>${results[0].content}</h3>`
+            <h3>${escapeHtml(results[0].content)}</h3>`
 
             if (results[0].filedir) {
               var filedir = results[0].filedir;
