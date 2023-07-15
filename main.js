@@ -96,14 +96,15 @@ app.post('/sibal_process', upload.single('uploadFile'), function(request, respon
 
   
   if (subject && content && username) {
-    if (subject.length < 50 && content.length < 250 && username.length < 50) {
+    //csrf 실습을 위해 길이를 500으로 늘려 코드 삽입함
+    if (subject.length < 50 && content.length < 500 && username.length < 50) {
               db.query('INSERT INTO posttable (subject, content, author, realid, filedir) VALUES(?,?,?,?,?)', [subject, content, username, realid, filedir], function (error, data) {
                   if (error) throw error;
                     response.send(`<script type="text/javascript">alert("글 등록이 완료되었습니다!");
                     document.location.href="/board";</script>`);
               });
           } else {
-            response.send(`<script type="text/javascript">alert("제목은 50자, 내용은 250자까지 입력 가능합니다."); 
+            response.send(`<script type="text/javascript">alert("제목은 50자, 내용은 500자까지 입력 가능합니다."); 
               document.location.href="/sibal";</script>`); 
           }           
   } else {
