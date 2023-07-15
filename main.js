@@ -8,6 +8,7 @@ require('date-utils');
 const path = require('path');
 var cors = require('cors');
 var authRouter = require('./auth');
+var domRouter = require('./domxss');
 var paramRouter = require('./param');
 var authCheck = require('./authCheck.js');
 var template = require('./template.js');
@@ -119,6 +120,7 @@ app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/comment', commentRouter);
 app.use('/param', paramRouter);
+app.use('/domxss', domRouter);
 
 app.listen(port, () => {
   const dir = "./uploads";
