@@ -23,14 +23,13 @@ router.get('/', function (request, response) {
             for(var i = 0; i < rows.length; i++){
               var author = rows[i].author;
               var subject = rows[i].subject;
-              var content = rows[i].content;
+              //stored xss 실습 중 악성 스크립트가 한번 실행되게 하도록 내용 부분을 지움
               var id = rows[i].id;
 
               var title = '글 목록';    
             html += `
             <h2>글쓴이: ${author}</h2>
             <a href="/board/${id}"><h1>${subject}</h1></a>
-            <h3>${content}</h3>
             <hr>
             `
             
