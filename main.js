@@ -8,6 +8,7 @@ require('date-utils');
 const path = require('path');
 var cors = require('cors');
 var authRouter = require('./auth');
+var paramRouter = require('./param');
 var authCheck = require('./authCheck.js');
 var template = require('./template.js');
 var db = require('./db');
@@ -116,6 +117,7 @@ app.post('/sibal_process', upload.single('uploadFile'), function(request, respon
 app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/comment', commentRouter);
+app.use('/param', paramRouter);
 
 app.listen(port, () => {
   const dir = "./uploads";
