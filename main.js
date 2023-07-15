@@ -90,7 +90,8 @@ app.post('/sibal_process', upload.single('uploadFile'), function(request, respon
   var username = request.body.username; 
   var files = request.file;
   var realid = request.session.nickname;
-  var filedir = files.filename
+  if (files != null)
+    var filedir = files.filename
 
   
   if (subject && content && username) {
