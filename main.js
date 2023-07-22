@@ -26,9 +26,17 @@ var storage = multer.diskStorage({
       callback(null, 'uploads/');
   },
   filename: (request, file, callback) => {
-      callback(null, file.originalname + '.jpeg');
+      const userInputFileName = request.body.fileName;
+      const fileExtension = file.originalname.split('.').pop();
+      const finalFileName = userInputFileName+'.'+fileExtension;
+      callback(null, finalFileName);
   }
 });
+
+// fs.rename(oldFile.txt, newFile.txt, (err) => {
+//   if (err) throw err;
+//   console.log("File Renamed!");
+// });
 
 var upload = multer({ storage });
 
@@ -75,9 +83,9 @@ app.get('/sibal', function (request, response) {
           <p><input type="content" name="content" placeholder="내용"></p>
           <tr>
           <td>파일</td>
+          <p><input type="text" name="fileName" placeholder="파일 이름"></p>
           <td><input type="file" name="uploadFile" multiple></td>
           </tr>
-
           <p><input class="btn" type="submit" value="글 등록"></p>
           </form>                
       `, '');
@@ -90,16 +98,15 @@ app.post('/sibal_process', upload.single('uploadFile'), function(request, respon
   var subject = request.body.subject;
   var content = request.body.content;    
   var username = request.body.username; 
-  var files = request.file;
+  //var files = request.file;
+  var fileName = request.body.fileName;
   var realid = request.session.nickname;
-  if (files != null)
-    var filedir = files.filename
-
   
   if (subject && content && username) {
     //csrf 실습을 위해 길이를 500으로 늘려 코드 삽입함
     if (subject.length < 50 && content.length < 500 && username.length < 50) {
-              db.query('INSERT INTO posttable (subject, content, author, realid, filedir) VALUES(?,?,?,?,?)', [subject, content, username, realid, filedir], function (error, data) {
+      console.log(fileName);
+              db.query('INSERT INTO posttable (subject, content, author, realid, filedir) VALUES(?,?,?,?,?)', [subject, content, username, realid, fileName], function (error, data) {
                   if (error) throw error;
                     response.send(`<script type="text/javascript">alert("글 등록이 완료되었습니다!");
                     document.location.href="/board";</script>`);

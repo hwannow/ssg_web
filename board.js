@@ -77,7 +77,7 @@ router.get('/:id', function (request, response) {
               console.log(filedir);
               html += `
                 <div>
-                <img src="../../uploads/${filedir}">
+                <img src="../../uploads/${filedir}.jpeg">
                   </div>
               `
             }
